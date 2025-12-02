@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Artikel - Santri Berliterasi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background:#bfbfbf; line-height:1.6; }
+
+        /* HEADER */
+        header {
+            background:#063b2f;
+            color:white;
+            padding:25px 15px;
+            text-align:center;
+            box-shadow:0 2px 8px rgba(0,0,0,0.3);
+        }
+        header h1 { font-size:26px; margin-bottom:6px; }
+        header p { font-size:14px; opacity:0.9; }
+
+        /* NAVBAR */
+        nav {
+            background:#063b2f;
+            padding:12px;
+            text-align:center;
+            box-shadow:0 2px 6px rgba(0,0,0,0.3);
+        }
+        nav a {
+            color:white;
+            margin:0 15px;
+            text-decoration:none;
+            font-weight:bold;
+            font-size:15px;
+        }
+        nav a:hover { text-decoration:underline; }
+
+        /* CONTAINER */
+        .container {
+            max-width:900px;
+            margin:35px auto;
+            padding:0 15px;
+        }
+
+        /* CARD ARTIKEL */
+        .card {
+            background:white;
+            padding:25px;
+            border-radius:22px;
+            margin-bottom:30px;
+            box-shadow:0 4px 15px rgba(0,0,0,0.25);
+
+            opacity:0;
+            transform:translateY(30px);
+            filter:blur(4px);
+            transition:0.6s ease-out;
+        }
+        .card.show {
+            opacity:1;
+            transform:translateY(0);
+            filter:blur(0);
+        }
+
+        .tag {
+            display:inline-block;
+            background:#dff7e5;
+            color:#177d4a;
+            padding:6px 12px;
+            border-radius:20px;
+            margin-bottom:12px;
+            font-size:13px;
+        }
+
+        .judul-artikel { font-size:26px; margin-bottom:10px; color:#222; }
+        .meta { font-size:13px; color:#555; margin-bottom:20px; }
+
+        .konten-artikel p {
+            margin-bottom:16px;
+            font-size:15px;
+            color:#444;
+            text-align:justify;
+        }
+
+        .back-link { margin-bottom:15px; }
+        .back-link a {
+            color:#063b2f;
+            text-decoration:none;
+            font-weight:bold;
+        }
+        .back-link a:hover { text-decoration:underline; }
+
+        .footer {
+            text-align:center;
+            padding:15px;
+            font-size:12px;
+            color:#444;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Santri Berliterasi <i class="fas fa-pen-nib"></i></h1>
+    <p>Ruang tulisan santri untuk merawat ilmu, adab, dan literasi.</p>
+</header>
+
+<nav>
+    <a href="index.html">Beranda</a>
+    <a href="artikel.html">Artikel</a>
+    <a href="tausiyah.html">Tausiyah</a>
+    <a href="tentang.html">Tentang</a>
+    <a href="kontak.html">Kontak</a>
+    <a href="rekomendasi.html">Rekomendasi Buku</a>
+</nav>
+
+<div class="container">
+
+    <div class="back-link">
+        <a href="javascript:history.back()">&larr; Kembali</a>
+    </div>
+
+    <article class="card" id="artikel-card">
+        <span class="tag" id="artikel-tag">Tag</span>
+        <h1 class="judul-artikel" id="artikel-judul">Judul Artikel</h1>
+        <p class="meta" id="artikel-meta">Ditulis oleh: -</p>
+
+        <div class="konten-artikel" id="artikel-konten"></div>
+    </article>
+
+</div>
+
+<div class="footer">
+    &copy; 2025 Santri Berliterasi. Menulis untuk merawat ilmu dan adab.
+</div>
+
+<script>
+/* =============================
+   DATABASE ARTIKEL OTOMATIS
+   ============================= */
+const artikelData = {
+
+    "menjaga-semangat-belajar-di-pesantren": {
+        tag: "Motivasi Santri",
+        judul: "Menjaga Semangat Belajar di Pesantren",
+        penulis: "Admin SantriLiterasi",
+        tanggal: "22 November 2025",
+        paragraf: [
+            "Di tengah padatnya jadwal mengaji, sekolah formal, dan kegiatan harian di pesantren, kadang semangat belajar bisa naik turun. Itu manusiawi.",
+            "Seorang santri tetap dituntut menjaga niat. Belajar bukan sekadar mengejar nilai, tetapi menuntut ilmu karena Allah.",
+            "Dengan niat yang benar, lelah terasa lebih ringan, dan waktu terasa lebih berkah."
+        ]
+    },
+
+    "mengapa-santri-perlu-menulis": {
+        tag: "Literasi",
+        judul: "Mengapa Santri Perlu Menulis?",
+        penulis: "Santri Tamu",
+        tanggal: "20 November 2025",
+        paragraf: [
+            "Menulis adalah cara merapikan pikiran. Banyak ulama besar meninggalkan ilmu dalam bentuk tulisan yang bertahan ratusan tahun.",
+            "Dengan menulis, santri belajar menyusun argumen dan menyampaikan ilmu dengan baik.",
+            "Tulisan adalah amal jariyah yang terus mengalir pahalanya selama bermanfaat."
+        ]
+    },
+
+    "adab-menuntut-ilmu-di-pesantren": {
+        tag: "Adab & Akhlak",
+        judul: "Adab Menuntut Ilmu di Pesantren",
+        penulis: "Santri Putra",
+        tanggal: "18 November 2025",
+        paragraf: [
+            "Ulama selalu menekankan pentingnya adab sebelum ilmu.",
+            "Adab terhadap guru, teman, kitab, dan waktu belajar adalah bentuk penghormatan kepada ilmu.",
+            "Hati yang bersih dan rendah hati akan memudahkan datangnya keberkahan ilmu."
+        ]
+    },
+
+    "mengelola-waktu-ala-santri": {
+        tag: "Manajemen Waktu",
+        judul: "Mengelola Waktu Ala Santri",
+        penulis: "Santri Senior",
+        tanggal: "12 November 2025",
+        paragraf: [
+            "Hidup di pesantren mengajarkan betapa berharganya waktu.",
+            "Santri harus pandai menetapkan prioritas dan memanfaatkan waktu senggang untuk muraja’ah.",
+            "Manajemen waktu akan membuat hati lebih tenang dan ilmu lebih mudah dicerna."
+        ]
+    }
+
+};
+
+/* =============================
+   LOAD ARTIKEL BERDASARKAN URL
+   ============================= */
+const params = new URLSearchParams(window.location.search);
+const slug = params.get("slug");
+
+const tagEl = document.getElementById("artikel-tag");
+const judulEl = document.getElementById("artikel-judul");
+const metaEl = document.getElementById("artikel-meta");
+const kontenEl = document.getElementById("artikel-konten");
+const cardEl = document.getElementById("artikel-card");
+
+if (slug && artikelData[slug]) {
+    const data = artikelData[slug];
+
+    tagEl.textContent = data.tag;
+    judulEl.textContent = data.judul;
+    metaEl.textContent = `Ditulis oleh: ${data.penulis} • ${data.tanggal}`;
+
+    kontenEl.innerHTML = "";
+    data.paragraf.forEach(teks => {
+        const p = document.createElement("p");
+        p.textContent = teks;
+        kontenEl.appendChild(p);
+    });
+
+    requestAnimationFrame(() => cardEl.classList.add("show"));
+
+} else {
+    judulEl.textContent = "Artikel Tidak Ditemukan";
+    metaEl.textContent = "";
+    kontenEl.innerHTML = "<p>Maaf, artikel yang Anda cari tidak tersedia.</p>";
+    cardEl.classList.add("show");
+}
+
+</script>
+
+</body>
+</html>
